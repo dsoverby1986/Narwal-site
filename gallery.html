@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Narwhal: The Unicorn of the Sea</title>
+    <style>
+        :root {
+            --primary: #2E3B4E;
+            --secondary: #4ECDC4;
+            --accent: #FF6B6B;
+            --light: #F7FFF7;
+            --dark: #1A2639;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(78, 205, 196, 0.2), transparent 70%);
+            z-index: 1;
+        }
+        
+        nav {
+            background-color: var(--dark);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 0;
+        }
+        
+        .menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .menu li {
+            margin-left: 1.5rem;
+        }
+        
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem 0;
+            display: block;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        .menu a:hover {
+            color: var(--secondary);
+        }
+        
+        .menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: width 0.3s;
+        }
+        
+        .menu a:hover::after {
+            width: 100%;
+        }
+        
+        .menu a.active {
+            color: var(--secondary);
+        }
+        
+        .menu a.active::after {
+            width: 100%;
+        }
+        
+        .main-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .page-desc {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            text-align: center;
+        }
+        
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .gallery-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .gallery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .gallery-content {
+            padding: 1.5rem;
+        }
+        
+        .gallery-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .gallery-content p {
+            color: #666;
+        }
+        
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+            border-radius: 5px;
+        }
+        
+        .lightbox-caption {
+            color: white;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(0,0,0,0.5);
+            transition: background-color 0.3s;
+        }
+        
+        .lightbox-close:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-column p, .footer-column a {
+            color: #ccc;
+            margin-bottom: 0.8rem;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #999;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .menu {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                margin-top: 1rem;
+            }
+            
+            .menu li {
+                margin: 0;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            .menu a {
+                padding: 0.8rem 0;
+            }
+            
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Narwhal Gallery</h1>
+            <p>Explore the beauty of these magnificent Arctic creatures</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">NarwhalWorld</a>
+            <ul class="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="anatomy.html">Anatomy</a></li>
+                <li><a href="diet.html">Diet</a></li>
+                <li><a href="behavior.html">Behavior</a></li>
+                <li><a href="habitat.html">Habitat</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="main-content">
+        <div class="page-header">
+            <h1>Image Gallery</h1>
+            <p class="page-desc">Discover the majestic narwhal through our collection of stunning images. Each photo captures a unique aspect of these fascinating creatures in their Arctic habitat.</p>
+        </div>
+        
+        <div class="gallery-container">
+            <div class="gallery-card">
+                <img src="/api/placeholder/600/400" alt="Narwhal with visible tusk" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>The Iconic Tusk</h3>
+                    <p>A male narwhal surfaces, displaying its magnificent spiral tusk extending from its upper jaw. This tusk is actually an elongated tooth that can grow up to 10 feet in length.</p>
+                </div>
+            </div>
+            
+            <div class="gallery-card">
+                <img src="/api/placeholder/600/400" alt="Pod of narwhals swimming together" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Social Gathering</h3>
+                    <p>A pod of narwhals swimming together in the Arctic waters. Narwhals are highly social creatures, typically traveling in groups of 5-10, though gatherings of hundreds have been observed during migrations.</p>
+                </div>
+            </div>
+            
+            <div class="gallery-card">
+                <img src="/api/placeholder/600/400" alt="Narwhal tusk close-up" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Tusk Detail</h3>
+                    <p>Close-up view of the narwhal's spiral tusk. The distinctive left canine tooth has a counterclockwise spiral and contains millions of nerve endings, suggesting it may serve as a sensory organ.</p>
+                </div>
+            </div>
+            
+            <div class="gallery-card">
+                <img src="/api/placeholder/600/400" alt="Narwhal in icy waters" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Arctic Adaptation</h3>
+                    <p>A narwhal navigating through icy Arctic waters. These whales are perfectly adapted to life in freezing conditions, with specialized features like thick blubber and the ability to navigate under ice.</p>
+                </div>
+            </div>
+            
+            <div class="gallery-card">
+                <img src="/api/placeholder/600/400" alt="Narwhal feeding" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Deep Diving Hunter</h3>
+                    <p>Narwhals can dive to depths of over 1,500 meters (4,920 feet) to hunt for prey. They feed primarily on Greenland halibut, Arctic cod, squid, and shrimp found near the ocean floor.</p>
+                </div>
+            </div>
+            
+            <div class="gallery-card">
+                <img src="/api/placeholder/600/400" alt="Narwhal mother and calf" class="gallery-img">
+                <div class="gallery-content">
+                    <h3>Mother and Calf</h3>
+                    <p>A narwhal mother with her young calf. Female narwhals typically give birth every three years, and calves stay with their mothers for about 20 months, learning essential survival skills.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="lightbox-overlay">
+        <div class="lightbox-content">
+            <img src="" alt="" class="lightbox-img

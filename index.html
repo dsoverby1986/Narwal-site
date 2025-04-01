@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Narwhal - The Unicorn of the Sea</title>
+    <style>
+        :root {
+            --primary: #2E3B4E;
+            --secondary: #4ECDC4;
+            --accent: #FF6B6B;
+            --light: #F7FFF7;
+            --dark: #1A2639;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(78, 205, 196, 0.2), transparent 70%);
+            z-index: 1;
+        }
+        
+        nav {
+            background-color: var(--dark);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 0;
+        }
+        
+        .menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .menu li {
+            margin-left: 1.5rem;
+        }
+        
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem 0;
+            display: block;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        .menu a:hover {
+            color: var(--secondary);
+        }
+        
+        .menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: width 0.3s;
+        }
+        
+        .menu a:hover::after {
+            width: 100%;
+        }
+        
+        .main-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .hero {
+            position: relative;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .hero img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(to bottom, rgba(26, 38, 57, 0.7), rgba(26, 38, 57, 0.4));
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 250px;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 38, 57, 0.8);
+            color: white;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .info-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .info-card h3 {
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-icon {
+            background-color: var(--secondary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-column p, .footer-column a {
+            color: #ccc;
+            margin-bottom: 0.8rem;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #999;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .menu {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                margin-top: 1rem;
+            }
+            
+            .menu li {
+                margin: 0;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            .menu a {
+                padding: 0.8rem 0;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Narwhal: The Unicorn of the Sea</h1>
+            <p>Discover the fascinating world of these majestic Arctic marine mammals</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">NarwhalWorld</a>
+            <ul class="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="anatomy.html">Anatomy</a></li>
+                <li><a href="diet.html">Diet</a></li>
+                <li><a href="behavior.html">Behavior</a></li>
+                <li><a href="habitat.html">Habitat</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="main-content">
+        <div class="hero">
+            <img src="/api/placeholder/1200/500" alt="Narwhal swimming in Arctic waters">
+            <div class="hero-content">
+                <h1>Welcome to the World of Narwhals</h1>
+                <p>Explore the mysterious life of the ocean's most unique whale species</p>
+                <a href="gallery.html" class="btn">View Gallery</a>
+            </div>
+        </div>
+        
+        <section class="section">
+            <h2>About Narwhals</h2>
+            <p>The narwhal (Monodon monoceros) is a medium-sized toothed whale that lives year-round in the Arctic waters around Greenland, Canada, and Russia. Narwhals are famous for their long, spiral tusks, which are actually elongated teeth that can grow up to 10 feet long.</p>
+            <p>These remarkable creatures are perfectly adapted to life in the Arctic, with specialized features that allow them to navigate, hunt, and survive in one of Earth's most challenging environments.</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>The Unicorn of the Sea</h3>
+                    <p>Narwhals get their nickname from their distinctive long tusk, which resembles the mythical unicorn's horn. This tusk is actually an elongated tooth that spirals counterclockwise and can grow as long as 10 feet.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Arctic Specialists</h3>
+                    <p>Narwhals have evolved to thrive in the extreme Arctic environment, with adaptations like a thick layer of blubber, the ability to dive to extreme depths, and navigation skills that allow them to find breathing holes in ice sheets.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Conservation Status</h3>
+                    <p>While currently listed as "Least Concern" by the IUCN, narwhals face growing threats from climate change, which is rapidly altering their Arctic habitat, as well as from industrial activities and hunting.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2>Featured Sections</h2>
+            <div class="info-grid">
+                <a href="gallery.html" class="card">
+                    <img src="/api/placeholder/400/200" alt="Narwhal gallery preview" style="width:100%; height:200px; object-fit:cover;">
+                    <div class="card-content">
+                        <h3>Image Gallery</h3>
+                        <p>View stunning images of narwhals in their natural Arctic habitat.</p>
+                    </div>
+                </a>
+                
+                <a href="anatomy.html" class="card">
+                    <img src="/api/placeholder/400/200" alt="Narwhal anatomy preview" style="width:100%; height:200px; object-fit:cover;">
+                    <div class="card-content">
+                        <h3>Anatomy & Biology</h3>
+                        <p>Learn about the unique physical characteristics of narwhals.</p>
+                    </div>
+                </a>
+                
+                <a href="habitat.html" class="card">
+                    <img src="/api/placeholder/400/200" alt="Narwhal habitat preview" style="width:100%; height:200px; object-fit:cover;">
+                    <div class="card-content">
+                        <h3>Natural Habitat</h3>
+                        <p>Discover where narwhals live and the environments they thrive in.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>NarwhalWorld</h3>
+                <p>Your comprehensive resource for learning about the mysterious narwhal, featuring information about their anatomy, behavior, diet, and natural habitat.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="anatomy.html">Anatomy</a>
+                <a href="diet.html">Diet</a>
+                <a href="behavior.html">Behavior</a>
+                <a href="habitat.html">Habitat</a>
+            </div>
+            
+            <div class="footer-column">
+                <h3>About This Site</h3>
+                <p>This website was created for educational purposes to share information about narwhals and their fascinating lives in the Arctic.</p>
+                <p>Images are placeholders and would be replaced with actual narwhal photography in a real site.</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2025 NarwhalWorld | All Rights Reserved</p>
+        </div>
+    </footer>
+</body>
+</html>

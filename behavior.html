@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Behavior - Narwhal: The Unicorn of the Sea</title>
+    <style>
+        :root {
+            --primary: #2E3B4E;
+            --secondary: #4ECDC4;
+            --accent: #FF6B6B;
+            --light: #F7FFF7;
+            --dark: #1A2639;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(78, 205, 196, 0.2), transparent 70%);
+            z-index: 1;
+        }
+        
+        nav {
+            background-color: var(--dark);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 0;
+        }
+        
+        .menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .menu li {
+            margin-left: 1.5rem;
+        }
+        
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem 0;
+            display: block;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        .menu a:hover {
+            color: var(--secondary);
+        }
+        
+        .menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: width 0.3s;
+        }
+        
+        .menu a:hover::after {
+            width: 100%;
+        }
+        
+        .menu a.active {
+            color: var(--secondary);
+        }
+        
+        .menu a.active::after {
+            width: 100%;
+        }
+        
+        .main-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .page-desc {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--primary);
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .behavior-hero {
+            position: relative;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+        
+        .behavior-hero-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .behavior-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(46, 59, 78, 0.5);
+            z-index: 0;
+        }
+        
+        .behavior-hero-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            max-width: 800px;
+        }
+        
+        .behavior-hero-content h2 {
+            color: white;
+        }
+        
+        .behavior-hero-content h2::after {
+            background-color: var(--accent);
+        }
+        
+        .behavior-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .behavior-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .behavior-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .behavior-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .behavior-content {
+            padding: 1.5rem;
+        }
+        
+        .behavior-content h3 {
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .timeline {
+            margin: 4rem 0;
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background-color: var(--secondary);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .timeline-content {
+            width: 45%;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .timeline-content h3 {
+            margin-top: 0;
+        }
+        
+        .timeline-left {
+            left: 0;
+        }
+        
+        .timeline-right {
+            left: 55%;
+        }
+        
+        .timeline-marker {
+            position: absolute;
+            background-color: var(--secondary);
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .fact-box {
+            background-color: rgba(78, 205, 196, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .fact-box h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+        
+        .video-container {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin: 3rem 0;
+            text-align: center;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-column p, .footer-column a {
+            color: #ccc;
+            margin-bottom: 0.8rem;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #999;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .menu {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                margin-top: 1rem;
+            }
+            
+            .menu li {
+                margin: 0;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            .menu a {
+                padding: 0.8rem 0;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 50px);
+                left: 50px !important;
+            }
+            
+            .timeline-marker {
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Narwhal Behavior</h1>
+            <p>Discover how these fascinating creatures live and interact in their Arctic environment</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">NarwhalWorld</a>
+            <ul class="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="anatomy.html">Anatomy</a></li>
+                <li><a href="diet.html">Diet</a></li>
+                <li><a href="behavior.html" class="active">Behavior</a></li>
+                <li><a href="habitat.html">Habitat</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="main-content">
+        <div class="page-header">
+            <h1>Animal Behavior</h1>
+            <p class="page-desc">Narwhals display fascinating behaviors adapted to their Arctic lifestyle and unique ecological niche.</p>
+        </div>
+        
+        <div class="behavior-hero">
+            <img src="/api/placeholder/1200/500" alt="Pod of narwhals swimming together" class="behavior-hero-img">
+            <div class="behavior-hero-content">
+                <h2>Social Creatures of the Arctic</h2>
+                <p>Narwhals are highly social animals that typically travel in pods ranging from a few individuals to several hundred. Their complex social behaviors help them survive in one of Earth's most challenging environments.</p>
+            </div>
+        </div>
+        
+        <h2>Key Behavioral Traits</h2>
+        
+        <div class="behavior-grid">
+            <div class="behavior-card">
+                <img src="/api/placeholder/400/300" alt="Social structure of narwhals" class="behavior-img">
+                <div class="behavior-content">
+                    <h3>Social Structure</h3>
+                    <p>Narwhals are highly social creatures that typically travel in pods of 5-10 individuals, though gatherings of hundreds or even thousands have been observed during migrations. These pods often consist of animals of the same sex and age.</p>
+                    <p>During summer months, narwhals often form larger aggregations in coastal areas and fjords, while in winter they disperse into smaller groups as they move to deeper offshore waters.</p>
+                </div>
+            </div>
+            
+            <div class="behavior-card">
+                <img src="/api/placeholder/400/300" alt="Narwhal hunting for food" class="behavior-img">
+                <div class="behavior-content">
+                    <h3>Feeding Behavior</h3>
+                    <p>Narwhals are deep divers, often reaching depths of 800-1,500 meters to find prey. They can perform multiple deep dives per day, spending about 3 hours daily underwater hunting for food.</p>
+                    <p>They primarily use echolocation to locate prey in the dark depths and employ suction feeding to capture their meals. Narwhals feed more intensively during winter months when they inhabit deeper waters.</p>
+                </div>
+            </div>
+            
+            <div class="behavior-card">
+                <img src="/api/placeholder/400/300" alt="Narwhal predator protection" class="behavior-img">
+                <div class="behavior-content">
+                    <h3>Predator Protection</h3>
+                    <p>The main predators of narwhals are polar bears, orcas, and humans. When threatened, narwhals typically flee, though they may also form tight groups or freeze in place. Their ability to navigate under ice gives them some protection from orcas.</p>
+                    <p>In the presence of killer whales, narwhals will often move very close to shorelines or into areas with dense ice cover where the larger orcas cannot follow.</p>
+                </div>
+            </div>
+            
+            <div class="behavior-card">
+                <img src="/api/placeholder/400/300" alt="Narwhal migration patterns" class="behavior-img">
+                <div class="behavior-content">
+                    <h3>Migration Patterns</h3>
+                    <p>Narwhals follow seasonal migration patterns that are closely tied to ice formation and breakup. In summer, they move closer to coastal areas and fjords, while in winter they inhabit offshore areas with dense pack ice.</p>
+                    <p>These migrations can cover hundreds of kilometers and are remarkably consistent year after year, suggesting strong cultural learning and memory within narwhal populations.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="fact-box">
+            <h3>Did You Know?</h3>
+            <p>Narwhals can dive deeper than almost any other marine mammal, reaching depths of up to 1,500 meters (4,900 feet). They can hold their breath for up to 25 minutes during these impressive dives, and their heart rate slows dramatically to conserve oxygen.</p>
+        </div>
+        
+        <h2>Communication & Vocalizations</h2>
+        <p>Narwhals have a complex system of communication that helps them navigate, find food, and interact with each other in their Arctic environment:</p>
+        
+        <div class="behavior-grid">
+            <div class="behavior-card">
+                <div class="behavior-content">
+                    <h3>Clicks & Whistles</h3>
+                    <p>Narwhals produce a variety of clicks, whistles, and pulsed sounds to communicate with each other. These vocalizations serve different purposes:</p>
+                    <ul>
+                        <li>Rapid clicks for echolocation and navigation</li>
+                        <li>Whistles for social communication within pods</li>
+                        <li>Pulsed sounds that may indicate emotional states</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="behavior-card">
+                <div class="behavior-content">
+                    <h3>Echolocation</h3>
+                    <p>Narwhals have one of the most sophisticated echolocation systems among marine mammals. Their clicking sounds bounce off objects and return to them, creating a detailed "sound map" of their surroundings.</p>
+                    <p>This ability is crucial for finding prey in the dark Arctic waters and for navigating under ice sheets where visibility is limited or nonexistent.</p>
+                </div>
+            </div>
+            
+            <div class="behavior-card">
+                <div class="behavior-content">
+                    <h3>Tusk Communication</h3>
+                    <p>Though not strictly vocalization, the narwhal's tusk may play a role in communication. Males have been observed crossing or rubbing tusks, a behavior known as "tusking." This may be related to establishing dominance hierarchies or determining social rank.</p>
+                    <p>The highly innervated tusk may also serve as a sensory organ that can detect changes in water temperature, pressure, and possibly even the chemical composition of the water.</p>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Daily Life Cycle</h2>
+        <p>A narwhal's day typically follows patterns dictated by their need to breathe, find food, and maintain social bonds:</p>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content timeline-left">
+                    <h3>Dawn</h3>
+                    <p>Narwhals often increase activity around dawn, engaging in feeding dives. They may perform multiple dives during this period, taking advantage of the vertical migration of prey species.</p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content timeline-right">
+                    <h3>Mid-day</h3>
+                    <p>During mid-day, narwhals may engage in social behaviors at the surface, including tusking (male-to-male tusk contact), breaching, and other forms of play or social bonding.</p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content timeline-left">
+                    <h3>Dusk</h3>
+                    <p>Like dawn, dusk is another peak feeding time for narwhals. They perform deep dives, using echolocation to locate prey in the darkness of the Arctic waters.</p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content timeline-right">
+                    <h3>Night</h3>
+                    <p>During the night, narwhals continue to dive for food but may alternate with periods of rest. Unlike humans, they don't sleep for extended periods but instead take short "naps" while remaining partially alert.</p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+        </div>
+        
+        <div class="fact-box">
+            <h3>Sleeping Habits</h3>
+            <p>Like other whales, narwhals don't sleep in the same way humans do. They appear to take short "naps" of 5-10 minutes while remaining aware of their surroundings, and they must consciously remember to surface for air. This is known as unihemispheric sleep, where one half of the brain remains active while the other half rests.</p>
+        </div>
+        
+        <h2>Reproduction & Parenting</h2>
+        
+        <div class="behavior-grid">
+            <div class="behavior-card">
+                <div class="behavior-content">
+                    <h3>Mating</h3>
+                    <p>Narwhals typically mate in spring, around April to May. Males may compete for females, possibly using their tusks in displays of dominance. The exact role of the tusk in mating is still not fully understood, but it may play a role in female choice of mates.</p>
+                </div>
+            </div>
+            
+            <div class="behavior-card">
+                <div class="behavior-content">
+                    <h3>Gestation & Birth</h3>
+                    <p>Female narwhals have a gestation period of about 14-15 months, one of the longest among cetaceans. Calves are typically born between July and August in the relatively warm coastal waters that narwhals inhabit during summer.</p>
+                </div>
+            </div>
+            
+            <div class="behavior-card">
+                <div class="behavior-content">
+                    <h3>Calf Rearing</h3>
+                    <p>Narwhal calves nurse for about 20 months, learning essential survival skills from their mothers during this period. The milk is rich in fat, helping calves quickly develop the blubber layer needed for Arctic waters.</p>
+                    <p>Young narwhals stay close to their mothers and learn migration routes, feeding techniques, and social behaviors through observation and experience.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>NarwhalWorld</h3>
+                <p>Your comprehensive resource for learning about the mysterious narwhal, featuring information about their anatomy, behavior, diet, and natural habitat.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="anatomy.html">Anatomy</a>
+                <a href="diet.html">Diet</a>
+                <a href="behavior.html">Behavior</a>
+                <a href="habitat.html">Habitat</a>
+            </div>
+            
+            <div class="footer-column">
+                <h3>About This Site</h3>
+                <p>This website was created for educational purposes to share information about narwhals and their fascinating lives in the Arctic.</p>
+                <p>Images are placeholders and would be replaced with actual narwhal photography in a real site.</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2025 NarwhalWorld | All Rights Reserved</p>
+        </div>
+    </footer>
+</body>
+</html>

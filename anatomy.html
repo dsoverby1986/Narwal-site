@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anatomy - Narwhal: The Unicorn of the Sea</title>
+    <style>
+        :root {
+            --primary: #2E3B4E;
+            --secondary: #4ECDC4;
+            --accent: #FF6B6B;
+            --light: #F7FFF7;
+            --dark: #1A2639;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(78, 205, 196, 0.2), transparent 70%);
+            z-index: 1;
+        }
+        
+        nav {
+            background-color: var(--dark);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 0;
+        }
+        
+        .menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .menu li {
+            margin-left: 1.5rem;
+        }
+        
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem 0;
+            display: block;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        .menu a:hover {
+            color: var(--secondary);
+        }
+        
+        .menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: width 0.3s;
+        }
+        
+        .menu a:hover::after {
+            width: 100%;
+        }
+        
+        .menu a.active {
+            color: var(--secondary);
+        }
+        
+        .menu a.active::after {
+            width: 100%;
+        }
+        
+        .main-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .page-desc {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--primary);
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .anatomy-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+            align-items: center;
+        }
+        
+        .anatomy-img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card h3 {
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-container {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin: 2rem 0;
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: var(--dark);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-column p, .footer-column a {
+            color: #ccc;
+            margin-bottom: 0.8rem;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #999;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .menu {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                margin-top: 1rem;
+            }
+            
+            .menu li {
+                margin: 0;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            .menu a {
+                padding: 0.8rem 0;
+            }
+            
+            .anatomy-hero {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Narwhal Anatomy & Biology</h1>
+            <p>Discover the unique physical characteristics of these Arctic specialists</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">NarwhalWorld</a>
+            <ul class="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="anatomy.html" class="active">Anatomy</a></li>
+                <li><a href="diet.html">Diet</a></li>
+                <li><a href="behavior.html">Behavior</a></li>
+                <li><a href="habitat.html">Habitat</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="main-content">
+        <div class="page-header">
+            <h1>Anatomy & Biology</h1>
+            <p class="page-desc">Narwhals have several unique physical characteristics that make them one of the most distinctive whale species in the world's oceans.</p>
+        </div>
+        
+        <div class="anatomy-hero">
+            <div>
+                <h2>The Extraordinary Narwhal</h2>
+                <p>The narwhal (Monodon monoceros) belongs to the family Monodontidae, which it shares with only one other species, the beluga whale. The genus name "Monodon" is derived from Greek and means "one-tooth" while "monoceros" means "one-horn," both referring to the narwhal's distinctive tusk.</p>
+                <p>These medium-sized toothed whales are perfectly adapted for life in the extreme Arctic environment, with specialized features for deep diving, finding food in dark waters, and surviving in sub-zero temperatures.</p>
+            </div>
+            <img src="/api/placeholder/600/400" alt="Narwhal anatomy diagram" class="anatomy-img">
+        </div>
+        
+        <div class="stat-container">
+            <h2>Narwhal By The Numbers</h2>
+            <div class="stat-grid">
+                <div class="stat-item">
+                    <div class="stat-number">16</div>
+                    <div class="stat-label">Feet in Length (adult males)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3,500</div>
+                    <div class="stat-label">Pounds in Weight</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Feet (maximum tusk length)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1,500</div>
+                    <div class="stat-label">Meters (maximum dive depth)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50</div>
+                    <div class="stat-label">Years (potential lifespan)</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Key Anatomical Features</h2>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>The Iconic Tusk</h3>
+                <p>The most notable feature of the narwhal is its tusk, which is actually an elongated left canine tooth that protrudes from the upper jaw. The tusk grows in a counterclockwise spiral pattern and can reach lengths of up to 10 feet (3 meters).</p>
+                <p>Primarily males develop tusks, though about 15% of females may also grow smaller ones. Some rare males can develop two tusks. The tusk contains millions of nerve endings, suggesting it may serve as a sensory organ.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Body Structure</h3>
+                <p>Narwhals have a streamlined body with no dorsal fin, which is an adaptation that helps them navigate under ice sheets. They have a relatively small head, a short snout, and a ridge along their back instead of a dorsal fin.</p>
+                <p>Their flippers are small and rounded, and they have a notched tail fin (fluke) that propels them through the water. Adult narwhals are mottled black and white, with older individuals appearing whiter as they age.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Blubber Layer</h3>
+                <p>Narwhals have a thick layer of blubber (up to 4 inches or 10 cm) that constitutes up to 40% of their body weight. This blubber serves multiple essential functions:</p>
+                <ul>
+                    <li>Insulation in frigid Arctic waters</li>
+                    <li>Energy storage during periods of low food availability</li>
+                    <li>Buoyancy control when diving</li>
+                    <li>Protection from the physical environment</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Breathing Adaptations</h3>
+                <p>Like all marine mammals, narwhals must surface to breathe air. However, they have remarkable diving abilities, capable of reaching depths of up to 1,500 meters (4,920 feet) and staying underwater for up to 25 minutes on a single breath.</p>
+                <p>These diving adaptations include high concentrations of myoglobin in their muscles to store oxygen, collapsible lungs that prevent nitrogen narcosis during deep dives, and the ability to slow their heart rate to conserve oxygen.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Echolocation</h3>
+                <p>Narwhals navigate and hunt using echolocation, producing a series of clicks, whistles, and pulsed sounds that bounce off objects and return to them, providing information about their surroundings. This is particularly useful in the dark Arctic waters and when hunting under ice sheets.</p>
+                <p>Their echolocation abilities are highly sophisticated, allowing them to detect prey and navigate in complete darkness at extreme depths.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Reproductive Biology</h3>
+                <p>Female narwhals reach sexual maturity around 8-9 years of age, while males mature later at about 12-16 years. The gestation period lasts approximately 14-15 months, and females typically give birth every three years.</p>
+                <p>Narwhal calves are born with a grayish-blue coloration and gradually develop the mottled black and white pattern as they mature. Calves stay with their mothers for about 20 months, learning essential survival skills.</p>
+            </div>
+        </div>
+        
+        <h2>Lifecycle and Lifespan</h2>
+        <p>The average narwhal lives about 30-40 years in the wild, though some have been estimated to live up to 50 years. Their lifecycle can be broken down into several stages:</p>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Calves (0-2 years)</h3>
+                <p>Newborn narwhals are about 5 feet (1.5 meters) long and weigh approximately 175 pounds (80 kg). They have a bluish-gray coloration and begin nursing immediately after birth. The milk is rich in fat to help the calves develop the blubber layer they need for Arctic waters.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Juveniles (2-8 years)</h3>
+                <p>Young narwhals gradually develop independence but often remain with their mother's pod. Males begin developing their tusks during this period, though the tusk doesn't typically extend beyond the upper lip until later.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Adults (8+ years)</h3>
+                <p>Adult narwhals reach their full size by about 8-10 years of age. Males continue tusk development, which can be influenced by testosterone levels. Fully mature adults engage in seasonal migrations, breeding, and may participate in social activities like "tusking" where males cross their tusks.</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>NarwhalWorld</h3>
+                <p>Your comprehensive resource for learning about the mysterious narwhal, featuring information about their anatomy, behavior, diet, and natural habitat.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="anatomy.html">Anatomy</a>
+                <a href="diet.html">Diet</a>
+                <a href="behavior.html">Behavior</a>
+                <a href="habitat.html">Habitat</a>
+            </div>
+            
+            <div class="footer-column">
+                <h3>About This Site</h3>
+                <p>This website was created for educational purposes to share information about narwhals and their fascinating lives in the Arctic.</p>
+                <p>Images are placeholders and would be replaced with actual narwhal photography in a real site.</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2025 NarwhalWorld | All Rights Reserved</p>
+        </div>
+    </footer>
+</body>
+</html>

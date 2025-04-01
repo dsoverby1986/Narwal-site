@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habitat - Narwhal: The Unicorn of the Sea</title>
+    <style>
+        :root {
+            --primary: #2E3B4E;
+            --secondary: #4ECDC4;
+            --accent: #FF6B6B;
+            --light: #F7FFF7;
+            --dark: #1A2639;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(78, 205, 196, 0.2), transparent 70%);
+            z-index: 1;
+        }
+        
+        nav {
+            background-color: var(--dark);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 0;
+        }
+        
+        .menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .menu li {
+            margin-left: 1.5rem;
+        }
+        
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem 0;
+            display: block;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        .menu a:hover {
+            color: var(--secondary);
+        }
+        
+        .menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: width 0.3s;
+        }
+        
+        .menu a:hover::after {
+            width: 100%;
+        }
+        
+        .menu a.active {
+            color: var(--secondary);
+        }
+        
+        .menu a.active::after {
+            width: 100%;
+        }
+        
+        .main-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .page-desc {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--primary);
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .map-container {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin: 2rem 0;
+        }
+        
+        .map-img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .map-content {
+            padding: 1.5rem;
+        }
+        
+        .habitat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .habitat-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .habitat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .habitat-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .habitat-content {
+            padding: 1.5rem;
+        }
+        
+        .habitat-content h3 {
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .conservation-banner {
+            background: linear-gradient(to right, var(--primary), var(--dark));
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 10px;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .conservation-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: url('/api/placeholder/1200/400') center/cover no-repeat;
+            opacity: 0.2;
+            z-index: 0;
+        }
+        
+        .conservation-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .conservation-content h2 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+        
+        .conservation-content h2::after {
+            background-color: var(--accent);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .conservation-btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+            margin-top: 1rem;
+        }
+        
+        .conservation-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .season-tabs {
+            display: flex;
+            margin: 2rem 0;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        .season-tab {
+            padding: 1rem 1.5rem;
+            background: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .season-tab.active {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .season-content {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .season-content.active {
+            display: block;
+        }
+        
+        .threat-container {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin: 2rem 0;
+        }
+        
+        .threat-list {
+            margin-top: 1.5rem;
+        }
+        
+        .threat-item {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .threat-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .threat-icon {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(78, 205, 196, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+        
+        .threat-content h3 {
+            margin-top: 0;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-column p, .footer-column a {
+            color: #ccc;
+            margin-bottom: 0.8rem;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #999;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .menu {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                margin-top: 1rem;
+            }
+            
+            .menu li {
+                margin: 0;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            .menu a {
+                padding: 0.8rem 0;
+            }
+            
+            .season-tabs {
+                flex-direction: column;
+            }
+            
+            .threat-item {
+                grid-template-columns: 1fr;
+            }
+            
+            .threat-icon {
+                margin: 0 auto 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Narwhal Habitat</h1>
+            <p>Explore where narwhals live and the environments they thrive in</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">NarwhalWorld</a>
+            <ul class="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="anatomy.html">Anatomy</a></li>
+                <li><a href="diet.html">Diet</a></li>
+                <li><a href="behavior.html">Behavior</a></li>
+                <li><a href="habitat.html" class="active">Habitat</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="main-content">
+        <div class="page-header">
+            <h1>Natural Habitat</h1>
+            <p class="page-desc">Narwhals have a very specific habitat range, limited to the cold Arctic waters around Greenland, Canada, and Russia.</p>
+        </div>
+        
+        <div class="map-container">
+            <img src="/api/placeholder/1200/500" alt="Map showing narwhal habitat range" class="map-img">
+            <div class="map-content">
+                <h2>Where Narwhals Live</h2>
+                <p>Narwhals are found exclusively in the Arctic waters of Canada, Greenland, Norway, and Russia. Their range is typically between 70°N and 80°N latitude, making them one of the northernmost dwelling marine mammals on Earth. The primary populations are concentrated in the Canadian Arctic Archipelago, West and East Greenland, and in the waters around Svalbard.</p>
+                <p>These remarkable creatures stay within the Arctic year-round, unlike some other Arctic marine mammals that migrate to warmer waters during winter months. Instead, narwhals follow seasonal migration patterns within the Arctic region, moving between different types of habitats as ice conditions change throughout the year.</p>
+            </div>
+        </div>
+        
+        <h2>Key Habitat Types</h2>
+        
+        <div class="habitat-grid">
+            <div class="habitat-card">
+                <img src="/api/placeholder/400/300" alt="Arctic fjords" class="habitat-img">
+                <div class="habitat-content">
+                    <h3>Coastal Fjords & Inlets</h3>
+                    <p>During summer months (July-September), narwhals often inhabit coastal fjords and inlets, particularly along the east coast of Baffin Island, northern Hudson Bay, and western Greenland. These sheltered areas provide protection and are often used as calving grounds.</p>
+                    <p>The relatively warmer coastal waters during summer also offer increased food availability and safety from some predators like killer whales.</p>
+                </div>
+            </div>
+            
+            <div class="habitat-card">
+                <img src="/api/placeholder/400/300" alt="Deep offshore Arctic waters" class="habitat-img">
+                <div class="habitat-content">
+                    <h3>Deep Offshore Waters</h3>
+                    <p>In winter months (October-June), narwhals move to deeper offshore waters, often at depths of 1,000-1,500 meters. These areas are typically covered with dense pack ice with only small openings (polynyas or leads) for breathing.</p>
+                    <p>These deep waters are where narwhals find much of their winter food supply, including Greenland halibut and other deep-water fish species.</p>
+                </div>
+            </div>
+            
+            <div class="habitat-card">
+                <img src="/api/placeholder/400/300" alt="Sea ice with polynyas" class="habitat-img">
+                <div class="habitat-content">
+                    <h3>Polynyas & Leads</h3>
+                    <p>Narwhals are highly adapted to living in areas with heavy ice cover. They utilize polynyas (recurring areas of open water surrounded by sea ice) and leads (linear cracks in sea ice) for breathing during winter.</p>
+                    <p>Their ability to navigate under ice and find these breathing holes is crucial to their survival in the harsh Arctic winter environment.</p>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Seasonal Habitat Changes</h2>
+        <p>Narwhals move between different habitats throughout the year, following a predictable seasonal pattern:</p>
+        
+        <div class="season-tabs">
+            <button class="season-tab active">Summer</button>
+            <button class="season-tab">Fall</button>
+            <button class="season-tab">Winter</button>
+            <button class="season-tab">Spring</button>
+        </div>
+        
+        <div class="season-content active">
+            <h3>Summer Habitat (July-September)</h3>
+            <p>In summer, narwhals move into coastal fjords and bays when sea ice retreats. They often gather in large numbers in specific inlets and bays, with some areas hosting thousands of individuals. These coastal waters offer:</p>
+            <ul>
+                <li>Protection from predators like killer whales</li>
+                <li>Shallow waters suitable for calving</li>
+                <li>Access to certain prey species</li>
+                <li>Opportunities for social interaction</li>
+            </ul>
+            <p>Key summer habitats include Lancaster Sound, Admiralty Inlet, Eclipse Sound, and the fjords of East Greenland.</p>
+        </div>
+        
+        <div class="season-content">
+            <h3>Fall Habitat (October-November)</h3>
+            <p>As sea ice begins to form in the fall, narwhals start their migration from coastal areas to deeper offshore waters. This transition period is characterized by:</p>
+            <ul>
+                <li>Increased feeding activity to build fat reserves for winter</li>
+                <li>Movement along traditional migration corridors</li>
+                <li>Gradual shift to deeper waters</li>
+                <li>Adaptation to increasing ice coverage</li>
+            </ul>
+            <p>During this period, narwhals often follow specific routes that have been used for generations, suggesting cultural knowledge passed between individuals and pods.</p>
+        </div>
+        
+        <div class="season-content">
+            <h3>Winter Habitat (December-March)</h3>
+            <p>Winter represents the most extreme habitat conditions for narwhals. They spend this season in offshore areas with nearly complete ice coverage, where they:</p>
+            <ul>
+                <li>Rely on polynyas and leads (cracks in the ice) for breathing</li>
+                <li>Dive to extreme depths (1,000-1,500 meters) to feed</li>
+                <li>Navigate in complete darkness due to the polar night</li>
+                <li>Maintain smaller, more dispersed groups</li>
+            </ul>
+            <p>The Davis Strait, Baffin Bay, and northern Hudson Bay are key winter habitats for different narwhal populations.</p>
+        </div>
+        
+        <div class="season-content">
+            <h3>Spring Habitat (April-June)</h3>
+            <p>As ice begins to break up in spring, narwhals prepare for their return migration to summer grounds. During this period:</p>
+            <ul>
+                <li>They follow the retreating ice edge</li>
+                <li>Begin to form larger social groups again</li>
+                <li>Take advantage of the spring phytoplankton bloom that increases food availability</li>
+                <li>Navigate through increasingly complex ice conditions</li>
+            </ul>
+            <p>The spring migration allows narwhals to gradually move from their deep-water wintering grounds to coastal summering areas, following ancient routes that may have been used for thousands of years.</p>
+        </div>
+        
+        <div class="conservation-banner">
+            <div class="conservation-content">
+                <h2>Habitat Under Threat</h2>
+                <p>The Arctic is warming at more than twice the rate of the global average, dramatically altering narwhal habitat. Sea ice coverage has decreased by approximately 13% per decade since satellite records began in 1979.</p>
+                <p>These changes present significant challenges for narwhals, which have evolved specifically for life in icy Arctic waters.</p>
+            </div>
+        </div>
+        
+        <div class="threat-container">
+            <h2>Major Threats to Narwhal Habitat</h2>
+            <p>Several human activities and environmental changes pose serious threats to narwhal habitat:</p>
+            
+            <div class="threat-list">
+                <div class="threat-item">
+                    <div class="threat-icon">❄️</div>
+                    <div class="threat-content">
+                        <h3>Climate Change</h3>
+                        <p>Rising temperatures are causing rapid sea ice loss across the Arctic, fundamentally altering narwhal habitat. Reduced ice cover means:</p>
+                        <ul>
+                            <li>Fewer breathing holes in winter</li>
+                            <li>Changes in prey distribution and abundance</li>
+                            <li>Increased competition from southern species moving northward</li>
+                            <li>Greater exposure to predators like killer whales</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="threat-item">
+                    <div class="threat-icon">🛢️</div>
+                    <div class="threat-content">
+                        <h3>Industrial Development</h3>
+                        <p>As sea ice retreats, previously inaccessible Arctic areas are opening for industrial activities:</p>
+                        <ul>
+                            <li>Oil and gas exploration creates disruptive noise pollution</li>
+                            <li>Increased shipping traffic risks collisions and habitat disturbance</li>
+                            <li>Mining operations can introduce pollutants into the marine environment</li>
+                            <li>Infrastructure development may block traditional migration routes</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="threat-item">
+                    <div class="threat-icon">🔊</div>
+                    <div class="threat-content">
+                        <h3>Noise Pollution</h3>
+                        <p>Narwhals are particularly sensitive to noise disturbance:</p>
+                        <ul>
+                            <li>Seismic surveys for oil exploration can cause stress and displacement</li>
+                            <li>Military sonar may interfere with narwhal echolocation</li>
+                            <li>Increased shipping noise can mask communication signals</li>
+                            <li>Narwhals may abandon important habitat areas due to noise stress</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="threat-item">
+                    <div class="threat-icon">⚓</div>
+                    <div class="threat-content">
+                        <h3>Changing Hunting Practices</h3>
+                        <p>Traditional subsistence hunting by Inuit communities is being impacted by changing conditions:</p>
+                        <ul>
+                            <li>Unpredictable ice conditions alter hunting patterns</li>
+                            <li>Modern technology may increase hunting efficiency</li>
+                            <li>Changes in governance and management practices</li>
+                            <li>Market demands and economic pressures</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Conservation Efforts</h2>
+        <p>Several initiatives are underway to protect narwhal habitat and ensure the survival of these unique Arctic mammals:</p>
+        
+        <div class="habitat-grid">
+            <div class="habitat-card">
+                <div class="habitat-content">
+                    <h3>Protected Areas</h3>
+                    <p>Several marine protected areas have been established in key narwhal habitats, including Tallurutiup Imanga (Lancaster Sound) National Marine Conservation Area in Canada and the Northeast Greenland National Park.</p>
+                    <p>These areas limit industrial activities and provide safe havens for narwhals and other Arctic species.</p>
+                </div>
+            </div>
+            
+            <div class="habitat-card">
+                <div class="habitat-content">
+                    <h3>Research & Monitoring</h3>
+                    <p>Scientists are tracking narwhal populations and movements using satellite tags, acoustic monitoring, and aerial surveys to better understand how they use their habitat and how they're responding to environmental changes.</p>
+                    <p>This research helps inform conservation measures and management decisions.</p>
+                </div>
+            </div>
+            
+            <div class="habitat-card">
+                <div class="habitat-content">
+                    <h3>Indigenous Co-Management</h3>
+                    <p>Collaboration between scientists, government agencies, and Inuit communities is essential for effective narwhal conservation. Indigenous Knowledge provides valuable insights into narwhal behavior and habitat use over generations.</p>
+                    <p>Co-management agreements help balance conservation needs with traditional subsistence practices.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>NarwhalWorld</h3>
+                <p>Your comprehensive resource for learning about the mysterious narwhal, featuring information about their anatomy, behavior, diet, and natural habitat.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="anatomy.html">Anatomy</a>
+                <a href="diet.html">Diet</a>
+                <a href="behavior.html">Behavior</a>
+                <a href="habitat.html">Habitat</a>
+            </div>
+            
+            <div class="footer-column">
+                <h3>About This Site</h3>
+                <p>This website was created for educational purposes to share information about narwhals and their fascinating lives in the Arctic.</p>
+                <p>Images are placeholders and would be replaced with actual narwhal photography in a real site.</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2025 NarwhalWorld | All Rights Reserved</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Simple script to handle season tabs
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.season-tab');
+            const contents = document.querySelectorAll('.season-content');
+            
+            tabs.forEach((tab, index) => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    tab.classList.add('active');
+                    contents[index].classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

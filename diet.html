@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet - Narwhal: The Unicorn of the Sea</title>
+    <style>
+        :root {
+            --primary: #2E3B4E;
+            --secondary: #4ECDC4;
+            --accent: #FF6B6B;
+            --light: #F7FFF7;
+            --dark: #1A2639;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(78, 205, 196, 0.2), transparent 70%);
+            z-index: 1;
+        }
+        
+        nav {
+            background-color: var(--dark);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 0;
+        }
+        
+        .menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .menu li {
+            margin-left: 1.5rem;
+        }
+        
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem 0;
+            display: block;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        .menu a:hover {
+            color: var(--secondary);
+        }
+        
+        .menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: width 0.3s;
+        }
+        
+        .menu a:hover::after {
+            width: 100%;
+        }
+        
+        .menu a.active {
+            color: var(--secondary);
+        }
+        
+        .menu a.active::after {
+            width: 100%;
+        }
+        
+        .main-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .page-desc {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--primary);
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .diet-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+            align-items: center;
+        }
+        
+        .diet-img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .food-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .food-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .food-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .food-content {
+            padding: 1.5rem;
+        }
+        
+        .food-content h3 {
+            margin-top: 0;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .process-container {
+            margin: 3rem 0;
+        }
+        
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .process-step {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .step-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .step-content::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 10px 10px 10px 0;
+            border-style: solid;
+            border-color: transparent white transparent transparent;
+        }
+        
+        .fact-container {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin: 2rem 0;
+        }
+        
+        .fact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .fact-card {
+            background: rgba(78, 205, 196, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 1.5rem;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-column p, .footer-column a {
+            color: #ccc;
+            margin-bottom: 0.8rem;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #999;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .menu {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                margin-top: 1rem;
+            }
+            
+            .menu li {
+                margin: 0;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            .menu a {
+                padding: 0.8rem 0;
+            }
+            
+            .diet-hero {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-step {
+                grid-template-columns: 60px 1fr;
+            }
+            
+            .step-number {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Narwhal Diet Information</h1>
+            <p>Learn what narwhals eat and how they hunt in the Arctic waters</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">NarwhalWorld</a>
+            <ul class="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="anatomy.html">Anatomy</a></li>
+                <li><a href="diet.html" class="active">Diet</a></li>
+                <li><a href="behavior.html">Behavior</a></li>
+                <li><a href="habitat.html">Habitat</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="main-content">
+        <div class="page-header">
+            <h1>Dietary Habits</h1>
+            <p class="page-desc">Narwhals have specialized feeding habits adapted to their Arctic environment and deep-diving abilities.</p>
+        </div>
+        
+        <div class="diet-hero">
+            <div>
+                <h2>Feeding in the Deep</h2>
+                <p>Narwhals are primarily carnivorous and have a relatively specialized diet compared to other marine mammals. They feed mainly on fish, squid, and shrimp found in the deep waters of the Arctic Ocean.</p>
+                <p>These remarkable creatures are deep divers, often reaching depths of 800-1,500 meters (2,600-4,900 feet) to find their prey in the darkness of the ocean depths. Their diet changes seasonally as they follow the movements of their prey species.</p>
+            </div>
+            <img src="/api/placeholder/600/400" alt="Narwhal diving for food" class="diet-img">
+        </div>
+        
+        <h2>What Do Narwhals Eat?</h2>
+        <p>Narwhals have a fairly specialized diet consisting primarily of these prey items:</p>
+        
+        <div class="food-grid">
+            <div class="food-card">
+                <img src="/api/placeholder/400/300" alt="Greenland halibut" class="food-img">
+                <div class="food-content">
+                    <h3>Greenland Halibut</h3>
+                    <p>This deep-water flatfish is a primary food source for narwhals, especially during winter months. Greenland halibut typically live at depths of 500-2,000 meters, aligning perfectly with narwhals' diving abilities.</p>
+                </div>
+            </div>
+            
+            <div class="food-card">
+                <img src="/api/placeholder/400/300" alt="Arctic cod" class="food-img">
+                <div class="food-content">
+                    <h3>Arctic Cod</h3>
+                    <p>Arctic cod is an important part of the narwhal diet, particularly during summer months. These fish are rich in oil and provide essential energy for narwhals in the cold Arctic environment.</p>
+                </div>
+            </div>
+            
+            <div class="food-card">
+                <img src="/api/placeholder/400/300" alt="Squid" class="food-img">
+                <div class="food-content">
+                    <h3>Squid</h3>
+                    <p>Various species of squid form a significant portion of the narwhal diet. Narwhals are adept at catching these fast-moving cephalopods in the darkness of deep Arctic waters.</p>
+                </div>
+            </div>
+            
+            <div class="food-card">
+                <img src="/api/placeholder/400/300" alt="Shrimp" class="food-img">
+                <div class="food-content">
+                    <h3>Shrimp</h3>
+                    <p>Deep-water shrimp species are commonly consumed by narwhals. These crustaceans are often found along the ocean floor where narwhals frequently forage.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="fact-container">
+            <h2>Interesting Feeding Facts</h2>
+            <div class="fact-grid">
+                <div class="fact-card">
+                    <h3>Seasonal Feeding Patterns</h3>
+                    <p>Narwhals tend to feed intensively during winter months when they spend time in offshore, deeper waters. During summer, they may eat less as they congregate in coastal areas and fjords.</p>
+                </div>
+                
+                <div class="fact-card">
+                    <h3>Benthic Foraging</h3>
+                    <p>Narwhals are considered benthic feeders, meaning they often hunt near the ocean floor. Studies of their stomach contents show a high proportion of bottom-dwelling species.</p>
+                </div>
+                
+                <div class="fact-card">
+                    <h3>Tusk Usage in Feeding</h3>
+                    <p>While not the primary function of the tusk, some research suggests narwhals may sometimes use their tusks to stun fish or "sift" through the seafloor sediment to find prey.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="process-container">
+            <h2>How Narwhals Hunt</h2>
+            <p>The narwhal hunting process is a remarkable demonstration of their specialized adaptations for Arctic life:</p>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Deep Diving</h3>
+                        <p>Narwhals begin their hunt by diving deep into the ocean, sometimes reaching depths of over 1,500 meters (4,900 feet). They can stay underwater for up to 25 minutes on a single breath, giving them ample time to locate prey.</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Echolocation</h3>
+                        <p>In the darkness of the deep ocean, narwhals use echolocation to find their prey. They emit a series of clicks that bounce off objects and return to them, providing a detailed "sound picture" of their surroundings and potential prey.</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Suction Feeding</h3>
+                        <p>Once prey is located, narwhals use a technique called suction feeding. They rapidly open their mouths, creating negative pressure that pulls the prey in, then close their mouths and expel water through their baleen plates, trapping the food inside.</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Multiple Daily Dives</h3>
+                        <p>Narwhals perform multiple deep dives per day for feeding, spending about 3 hours daily underwater actively hunting. They are most active with feeding during dawn and dusk.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Adaptations for Deep-Water Feeding</h2>
+        <p>Narwhals have several specialized adaptations that allow them to be successful hunters in the extreme Arctic environment:</p>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Oxygen Storage</h3>
+                <p>Narwhals have high concentrations of myoglobin in their muscles, allowing them to store large amounts of oxygen for deep dives. Their muscles can appear almost black due to this high myoglobin concentration.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Collapsible Lungs</h3>
+                <p>Their lungs can collapse under pressure during deep dives, preventing nitrogen from dissolving in the bloodstream (which would cause decompression sickness) and reducing buoyancy for easier descent.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Reduced Heart Rate</h3>
+                <p>During deep dives, narwhals can slow their heart rate from 60-70 beats per minute to just 10-20 beats per minute, conserving oxygen for extended hunting periods.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Highly Sensitive Echolocation</h3>
+                <p>Narwhals have one of the most sophisticated echolocation systems among toothed whales, allowing them to detect prey in complete darkness and differentiate between similar species.</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>NarwhalWorld</h3>
+                <p>Your comprehensive resource for learning about the mysterious narwhal, featuring information about their anatomy, behavior, diet, and natural habitat.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="anatomy.html">Anatomy</a>
+                <a href="diet.html">Diet</a>
+                <a href="behavior.html">Behavior</a>
+                <a href="habitat.html">Habitat</a>
+            </div>
+            
+            <div class="footer-column">
+                <h3>About This Site</h3>
+                <p>This website was created for educational purposes to share information about narwhals and their fascinating lives in the Arctic.</p>
+                <p>Images are placeholders and would be replaced with actual narwhal photography in a real site.</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2025 NarwhalWorld | All Rights Reserved</p>
+        </div>
+    </footer>
+</body>
+</html>
